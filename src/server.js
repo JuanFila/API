@@ -1,9 +1,19 @@
 const express = require('express');
 
 const app = express();
+// ao usar /estamos passando um caminho
+// /: estamos usando um paramentro
+// parametro para dados simples
+app.get("/message/:id/:user", (request, response) => {
 
-app.get("/menssage", (req, res) => {
-    res.send("Hello, world!");
+    const {id, user } = request.params; //desestruturação 
+
+    response.send(
+        `
+        Mensagem ID: ${id}
+        Para o usaurio: ${user}
+        `
+    )
 })
 
 const PORT = 3333;
