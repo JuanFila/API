@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server.js --watch"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
   },
   "author": "JuanFila",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
