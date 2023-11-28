@@ -1,33 +1,13 @@
-const express = require('express');
+const express = require("express");
 
-const app = express();
+const app = express()
+app.use(express.json())
 
+app.post("/users", (req, res) => {
 
-//ROTAS
+    const {name, email, password} = req.body;
 
-// ao usar /estamos passando um caminho
-// /: estamos usando um paramentro
-// parametro para dados simples
-// a ? no link indica um query parms
-// mais de um query parms eu passo um & apos usar a ?
-
-//Route params são dados onrigatorios - query parms não necessariamente são obrigatorios
-app.get("/message/:id/:user", (request, response) => {
-
-    const {id, user } = request.params; //desestruturação 
-
-    response.send(
-        `
-        Mensagem ID: ${id}
-        Para o usaurio: ${user}
-        `
-    )
-})
-//localhost:3333/users?page=12&limit=200
-app.get("/users", (req, res) => {
-    const {page, limit} = req.query;
-
-    res.send(`Página: ${page}. Mostrar: ${limit}`)
+    res.json({name, email, password})
 })
 
 const PORT = 3333;
