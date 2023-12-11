@@ -14,9 +14,9 @@ app.use(routes)
 
 database()
 
-app.use((error, request, resonse, next) => {
+app.use((error, request, response, next) => {
     if(error instanceof AppError){
-        return resonse.status(error.statusCode).json({
+        return response.status(error.statusCode).json({
             status: "error",
             menssage: error.message
         })
