@@ -4,14 +4,14 @@ class NotesController {
     async create(req, res) {
 
         const { title, description, tags, links } = req.body;
-        const  user_id  = req.user.id;
+        const user_id = req.user.id;
 
-        const note_id = await knex("notes").insert({
+        const [note_id] = await knex("notes").insert({
             title,
             description,
             user_id
         });
-        
+
         const linksInsert = links.map(link => {
             return {
                 note_id,
@@ -58,25 +58,24 @@ class NotesController {
 
     async index(req, res) {
         const { title, tags } = req.query;
-
         const user_id = req.user.id;
 
         let notes
 
         if (tags) {
-            const filterTags  = tags.split(',').map(tag => tag.trim());
-            
+            const filterTags = tags.split(',').map(tag => tag.trim());
+
             notes = await knex("tags")
-            .select([
-                "notes.id",
-                "notes.title",
-                "notes.user_id"
-            ])
-            .where("notes.user_id", user_id)
-            .whereLike("notes.title", `%${title}%` )
-            .whereIn("name", filterTags)
-            .innerJoin("notes", "notes.id", "tags.note_id")
-            .orderBy("notes.title")
+                .select([
+                    "notes.id",
+                    "notes.title",
+                    "notes.user_id"
+                ])
+                .where("notes.user_id", user_id)
+                .whereLike("notes.title", `%${title}%`)
+                .whereIn("name", filterTags)
+                .innerJoin("notes", "notes.id", "tags.note_id")
+                .orderBy("notes.title")
         } else {
             notes = await knex("notes")
                 .where({ user_id })
@@ -84,12 +83,12 @@ class NotesController {
                 .orderBy("title");
         }
 
-        const userTags = await knex("tags").where({user_id});
+        const userTags = await knex("tags").where({ user_id });
 
         const notesWithTags = notes.map(notes => {
-            const noteTags = userTags.filter( tag => tag.note_id === notes.id);
+            const noteTags = userTags.filter(tag => tag.note_id === notes.id);
 
-            return{
+            return {
                 ...notes,
                 tags: noteTags
             }
