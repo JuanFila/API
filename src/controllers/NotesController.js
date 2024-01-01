@@ -11,7 +11,7 @@ class NotesController {
             description,
             user_id
         });
-
+        
         const linksInsert = links.map(link => {
             return {
                 note_id,
