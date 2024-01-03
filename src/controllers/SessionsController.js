@@ -25,8 +25,14 @@ class SessionsController {
             subject: String(user.id),
             expiresIn
         })
-
-        return res.json({ user, token})
+        // mantém o password como undefined para não aparecer no local storage do front
+        return res.json({ 
+            user: {
+                ...user,
+                password: undefined,
+            },
+            token,
+        });
     }
 }
 
