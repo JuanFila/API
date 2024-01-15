@@ -1,5 +1,4 @@
 const sqliteConnection = require("../database/sqlite")
-
 class UserRepository { // separa a resposabilidade do banco dedados
     async findByEmail(email){ // procurar o email
         const database = await sqliteConnection();
