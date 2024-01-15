@@ -6,7 +6,7 @@ class UserCreateService {
     // construtor deve ficar no nível da classe e fora da função
     this.userRepository = userRepository // o this.useRepository o this siginifica que é o scopo global da classe e atribuindo a variavel com o mesmo nome para estar diponível para a classe como um todo
   }
-  async execute({ name, email, password }) {
+  async execute( name, email, password ) {
 
     const checkUserExist = await this.userRepository.findByEmail(email);
 
